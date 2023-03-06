@@ -18,6 +18,7 @@ Federated learning shows a bright promise as a privacy-preserving collaborative 
     booktitle = {CVPR},
     year      = {2023}
 }
+```
 
 ## Relevant Projects
 [1] Learn from Others and Be Yourself in Heterogeneous Federated Learning - CVPR 2022 [[Link](https://openaccess.thecvf.com/content/CVPR2022/papers/Huang_Learn_From_Others_and_Be_Yourself_in_Heterogeneous_Federated_Learning_CVPR_2022_paper.pdf)][[code](https://github.com/WenkeHuang/FCCL)]
