@@ -6,6 +6,7 @@ from typing import Tuple
 from torch.utils.data import DataLoader
 import numpy as np
 from utils.logger import CsvWriter
+from collections import Counter
 
 
 def global_evaluate(model: FederatedModel, test_dl: DataLoader, setting: str, name: str) -> Tuple[list, list]:
@@ -26,6 +27,10 @@ def global_evaluate(model: FederatedModel, test_dl: DataLoader, setting: str, na
                 total += labels.size(0)
         top1acc = round(100 * top1 / total, 2)
         top5acc = round(100 * top5 / total, 2)
+        # if name in ['fl_digits','fl_officecaltech']:
+        accs.append(top1acc)
+        # elif name in ['fl_office31','fl_officehome']:
+        #     accs.append(top5acc)
     net.train(status)
     return accs
 
@@ -38,13 +43,42 @@ def train(model: FederatedModel, private_dataset: FederatedDataset,
     model.N_CLASS = private_dataset.N_CLASS
     domains_list = private_dataset.DOMAINS_LIST
     domains_len = len(domains_list)
-    if model.args.dataset == 'fl_officecaltech':
-        selected_domain_list = np.random.choice(domains_list, size=args.parti_num - domains_len, replace=True, p=None)
-        selected_domain_list = list(selected_domain_list) + domains_list
-    elif model.args.dataset == 'fl_digits':
-        selected_domain_list = np.random.choice(domains_list, size=args.parti_num, replace=True, p=None)
-    from collections import Counter
-    result = Counter(selected_domain_list)
+
+    if args.rand_dataset:
+        max_num = 10
+        is_ok = False
+
+        while not is_ok:
+            if model.args.dataset == 'fl_officecaltech':
+                selected_domain_list = np.random.choice(domains_list, size=args.parti_num - domains_len, replace=True, p=None)
+                selected_domain_list = list(selected_domain_list) + domains_list
+            elif model.args.dataset == 'fl_digits':
+                selected_domain_list = np.random.choice(domains_list, size=args.parti_num, replace=True, p=None)
+
+            result = dict(Counter(selected_domain_list))
+
+            for k in result:
+                if result[k] > max_num:
+                    is_ok = False
+                    break
+            else:
+                is_ok = True
+
+    else:
+        selected_domain_dict = {'mnist': 3, 'usps': 7, 'svhn': 6, 'syn': 4}  # base
+        # selected_domain_dict = {'mnist': 1, 'usps': 1, 'svhn': 9, 'syn': 9}  # 20
+
+        # selected_domain_dict = {'mnist': 3, 'usps': 2, 'svhn': 1, 'syn': 4}  # 10
+
+        selected_domain_list = []
+        for k in selected_domain_dict:
+            domain_num = selected_domain_dict[k]
+            for i in range(domain_num):
+                selected_domain_list.append(k)
+
+        selected_domain_list = np.random.permutation(selected_domain_list)
+
+        result = Counter(selected_domain_list)
     print(result)
 
     print(selected_domain_list)
@@ -71,7 +105,7 @@ def train(model: FederatedModel, private_dataset: FederatedDataset,
             else:
                 accs_dict[i] = [accs[i]]
 
-        print('The ' + str(epoch_index) + ' Communcation Accuracy:' + str(mean_acc) + 'Method:' + model.args.model)
+        print('The ' + str(epoch_index) + ' Communcation Accuracy:', str(mean_acc), 'Method:', model.args.model)
         print(accs)
 
     if args.csv_log:

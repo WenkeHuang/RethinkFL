@@ -2,10 +2,18 @@ import torch.optim as optim
 import torch.nn as nn
 from tqdm import tqdm
 import copy
+from utils.args import *
 from models.utils.federated_model import FederatedModel
 import torch
 from utils.finch import FINCH
 import numpy as np
+
+
+def get_parser() -> ArgumentParser:
+    parser = ArgumentParser(description='Federated learning via FedHierarchy.')
+    add_management_args(parser)
+    add_experiment_args(parser)
+    return parser
 
 
 def agg_func(protos):
@@ -161,7 +169,7 @@ class FPL(FederatedModel):
                     loss_InfoNCE = None
 
                     for label in labels:
-
+                        # 判断当前label 是否存在对应的global protos
                         if label.item() in self.global_protos.keys():
                             f_now = f[i].unsqueeze(0)
                             loss_instance = self.hierarchical_info_loss(f_now, label, all_f, mean_f, all_global_protos_keys)
