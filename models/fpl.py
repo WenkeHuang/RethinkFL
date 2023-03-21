@@ -169,7 +169,6 @@ class FPL(FederatedModel):
                     loss_InfoNCE = None
 
                     for label in labels:
-                        # 判断当前label 是否存在对应的global protos
                         if label.item() in self.global_protos.keys():
                             f_now = f[i].unsqueeze(0)
                             loss_instance = self.hierarchical_info_loss(f_now, label, all_f, mean_f, all_global_protos_keys)
