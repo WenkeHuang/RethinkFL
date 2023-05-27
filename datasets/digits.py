@@ -13,7 +13,7 @@ from torchvision.datasets import MNIST, SVHN, ImageFolder, DatasetFolder, USPS
 
 class MyDigits(data.Dataset):
     def __init__(self, root, train=True, transform=None,
-                 target_transform=None, download=False, data_name=None) -> None:
+                 target_transform=None, download=True, data_name=None) -> None:
         self.not_aug_transform = transforms.Compose([transforms.ToTensor()])
         self.data_name = data_name
         self.root = root

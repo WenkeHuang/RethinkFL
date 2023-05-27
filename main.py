@@ -2,8 +2,10 @@ import os
 import sys
 import socket
 import torch.multiprocessing
+
 torch.multiprocessing.set_sharing_strategy('file_system')
 import warnings
+
 warnings.filterwarnings("ignore")
 
 conf_path = os.getcwd()
@@ -29,32 +31,32 @@ import datetime
 
 def parse_args():
     parser = ArgumentParser(description='You Only Need Me', allow_abbrev=False)
-    parser.add_argument('--device_id', type=int, default=1, help='The Device Id for Experiment')
+    parser.add_argument('--device_id', type=int, default=0, help='The Device Id for Experiment')
 
-    parser.add_argument('--communication_epoch',type=int,default=100,help='The Communication Epoch in Federated Learning')
-    parser.add_argument('--local_epoch',type=int,default=10,help='The Local Epoch for each Participant')
+    parser.add_argument('--communication_epoch', type=int, default=100, help='The Communication Epoch in Federated Learning')
+    parser.add_argument('--local_epoch', type=int, default=10, help='The Local Epoch for each Participant')
     parser.add_argument('--parti_num', type=int, default=10, help='The Number for Participants')
 
     parser.add_argument('--seed', type=int, default=0, help='The random seed.')
     parser.add_argument('--rand_dataset', type=bool, default=True, help='The random seed.')
 
-    parser.add_argument('--model', type=str, default='fedopt',  # moon fedinfonce
+    parser.add_argument('--model', type=str, default='fpl',  # moon fedinfonce
                         help='Model name.', choices=get_all_models())
     parser.add_argument('--structure', type=str, default='homogeneity')
-    parser.add_argument('--dataset', type=str, default='fl_digits',  #fl_officecaltech fl_digits
+    parser.add_argument('--dataset', type=str, default='fl_officecaltech',  # fl_officecaltech fl_digits
                         choices=DATASET_NAMES, help='Which scenario to perform experiments on.')
 
-    parser.add_argument('--pri_aug', type=str, default='weak', # weak strong
+    parser.add_argument('--pri_aug', type=str, default='weak',  # weak strong
                         help='Augmentation for Private Data')
     parser.add_argument('--online_ratio', type=float, default=1, help='The Ratio for Online Clients')
     parser.add_argument('--learning_decay', type=bool, default=False, help='The Option for Learning Rate Decay')
     parser.add_argument('--averaing', type=str, default='weight', help='The Option for averaging strategy')
 
-    parser.add_argument('--infoNCET',type=float,default=0.02,help='The InfoNCE temperature')
-    parser.add_argument('--T',type=float,default=0.05,help='The Knowledge distillation temperature')
-    parser.add_argument('--weight',type=int,default=1,help='The Wegith for the distillation loss')
+    parser.add_argument('--infoNCET', type=float, default=0.02, help='The InfoNCE temperature')
+    parser.add_argument('--T', type=float, default=0.05, help='The Knowledge distillation temperature')
+    parser.add_argument('--weight', type=int, default=1, help='The Wegith for the distillation loss')
 
-    parser.add_argument('--reserv_ratio',type=float,default=0.1,help='Reserve ratio for prototypes')
+    parser.add_argument('--reserv_ratio', type=float, default=0.1, help='Reserve ratio for prototypes')
 
     torch.set_num_threads(4)
     add_management_args(parser)
