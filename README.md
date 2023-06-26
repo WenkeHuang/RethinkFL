@@ -6,7 +6,7 @@
 > [Link](https://openaccess.thecvf.com/content/CVPR2023/papers/Huang_Rethinking_Federated_Learning_With_Domain_Shift_A_Prototype_View_CVPR_2023_paper.pdf)
 
 ## News
-* [2022-03-16] Code has released.
+* [2022-03-16] Code has released. Digits [Link](https://drive.google.com/drive/folders/1SSv9dqQPBGyHS3rSwoFKmpBIeF4GX-i6?usp=sharing)
 * [2022-03-06] Repo created. Paper and code will come soon.
 
 ## Abstract
