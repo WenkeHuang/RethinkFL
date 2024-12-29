@@ -6,7 +6,7 @@
 > [Link](https://openaccess.thecvf.com/content/CVPR2023/papers/Huang_Rethinking_Federated_Learning_With_Domain_Shift_A_Prototype_View_CVPR_2023_paper.pdf)
 
 ## News
-* [2022-03-16] Code has released.
+* [2022-03-16] Code has released. Digits [Link](https://drive.google.com/drive/folders/1SSv9dqQPBGyHS3rSwoFKmpBIeF4GX-i6?usp=sharing)
 * [2022-03-06] Repo created. Paper and code will come soon.
 
 ## Abstract
@@ -24,3 +24,6 @@ Federated learning shows a bright promise as a privacy-preserving collaborative 
 
 ## Relevant Projects
 [1] Learn from Others and Be Yourself in Heterogeneous Federated Learning - CVPR 2022 [[Link](https://openaccess.thecvf.com/content/CVPR2022/papers/Huang_Learn_From_Others_and_Be_Yourself_in_Heterogeneous_Federated_Learning_CVPR_2022_paper.pdf)][[Code](https://github.com/WenkeHuang/FCCL)]
+
+[2] Federated Graph Semantic and Structural Learning - IJCAI 2023 [[Link](https://marswhu.github.io/publications/files/FGSSL.pdf)][[Code](https://github.com/wgc-research/fgssl)]
+
